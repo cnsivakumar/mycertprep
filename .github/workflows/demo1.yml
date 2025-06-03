@@ -2,6 +2,15 @@ name: Events Demo 1
 on: 
   push:
     branches: master
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: Test Suite
+        type: choice
+        value: functional
+        options:
+          - regression
+
 env:
   DAY_OF_WEEK: "Hello World"
 jobs:

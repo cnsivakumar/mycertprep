@@ -6,13 +6,17 @@ env:
   DAY_OF_WEEK: "Hello World"
 jobs:
   deploy:
+  if-windows-else:
     runs-on: ubuntu-latest
     env: 
       Greeting: Welcome
-    strategy:
-      matrix:
-        node-version: [14.x,16.x,18.x]
     steps:
+      - name: Condition 1
+        if: runner.os == 'Windows'
+        run: echo "Runner is working on $env.RUNNER_OS "
+      - name: Condition 2
+        if: runner.os != 'Windows'
+        run: echo "Runner is working on $env.RUNNER_OS "
       - name: Get code
         uses: actions/checkout@v3
       - name: Use Node Version ${{matrix.node-version}}

@@ -6,7 +6,6 @@ env:
   DAY_OF_WEEK: "Hello World"
 jobs:
   deploy:
-  if-Windows-else:
     runs-on: ubuntu-latest
     env: 
       Greeting: Welcome

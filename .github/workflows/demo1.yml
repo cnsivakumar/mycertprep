@@ -2,9 +2,13 @@ name: Events Demo 1
 on: 
   push:
     branches: master
+env:
+  DAY_OF_WEEK: "Hello World"
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env: 
+      Greeting: Welcome
     strategy:
       matrix:
         node-version: [14.x,16.x,18.x]
@@ -22,5 +26,9 @@ jobs:
         run: npm run test
       - name: Build code
         run: npm run build
+      - name: Print the environment variables
+        run echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+        env:
+          First_Name: Siva
       - name: Deploy project
         run: echo "Deploying..."

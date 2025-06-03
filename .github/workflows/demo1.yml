@@ -6,7 +6,7 @@ env:
   DAY_OF_WEEK: "Hello World"
 jobs:
   deploy:
-  if-windows-else:
+  if-Windows-else:
     runs-on: ubuntu-latest
     env: 
       Greeting: Welcome
@@ -22,7 +22,6 @@ jobs:
       - name: Use Node Version ${{matrix.node-version}}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{matrix.node-version}}
           cache: 'npm'
       - name: Install dependencies
         run: npm ci

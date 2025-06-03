@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       Greeting: Welcome
+      node-version: 14.x
     steps:
       - name: Condition 1
         if: runner.os == 'Windows'
@@ -19,9 +20,10 @@ jobs:
         run: echo "Runner is working on $env.RUNNER_OS "
       - name: Get code
         uses: actions/checkout@v3
-      - name: Use Node Version ${{matrix.node-version}}
+      - name: Use Node Version ${{node-version}}
         uses: actions/setup-node@v3
         with:
+          node-version: ${{node-version}}
           cache: 'npm'
       - name: Install dependencies
         run: npm ci

@@ -3,6 +3,7 @@ on:
   push:
     branches: master
   workflow_dispatch:
+    branches: master
     inputs:
       test_suite:
         description: Test Suite

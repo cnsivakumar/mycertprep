@@ -2,22 +2,37 @@ name: Events Demo 1
 on: 
   push:
     branches: master
-
-env:
-  DAY_OF_WEEK: "Hello World"
+env: 
+  node-version: 14.x
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint Code
+        run: npm run lint
+      - name: Test Code
+        run: npm run test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build the code
+        run: npm run build
+      - name: Upload artifacts
+        uses: actions/upload-artifacts
+        with:
+          name: desg-files
+          path: desg
   deploy:
     runs-on: ubuntu-latest
-    env: 
-      Greeting: Welcome
-      node-version: 14.x
     steps:
-      - name: Condition 1
-        if: runner.os == 'Windows'
-        run: echo "Runner is working on $env:RUNNER_OS "
-      - name: Condition 2
-        if: runner.os != 'Windows'
-        run: echo "Runner is working on $env:RUNNER_OS "
       - name: Get code
         uses: actions/checkout@v3
       - name: Use Node Version ${{env.node-version}}
@@ -25,20 +40,7 @@ jobs:
         with:
           node-version: ${{env.node-version}}
           cache: 'npm'
-      - name: Setting output to the variable
-        id: output1
-        run: echo "myoutput=functioning" >> "$GITHUB_ENV"
-      - name: Printing the output from previous step
-        run: echo "printing the output $myoutput"
       - name: Install dependencies
         run: npm ci
-      - name: Test code
-        run: npm run test
-      - name: Build code
-        run: npm run build
-      - name: Print the environment variables
-        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
-        env:
-          First_Name: Siva
       - name: Deploy project
         run: echo "Deploying..."

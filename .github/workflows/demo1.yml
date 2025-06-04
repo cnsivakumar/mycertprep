@@ -8,20 +8,25 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
+
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
         with:
           path: ~/.npm
           key: mycache-test-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+
       - name: Lint Code
         run: npm run lint
+
       - name: Test Code
         id: run-tests
         run: npm run test
+
       - name: Print the test result
         if: failure() && steps.run-tests.outcome == 'failure'
         run: echo "Test failed in the previous step. Please validate"
@@ -31,17 +36,21 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
+
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v3
         with:
           path: ~/.npm
           key: mycache-test-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+
       - name: Build the code
         run: npm run build
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -54,21 +63,15 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+
       - name: Print the Environment Variable
         run: echo "Node version is ${{ vars.NODE_VERSION }}"
+
       - name: Use Node Version ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'npm'
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: mycache-test-${{ hashFiles('**/package-lock.json') }}
-      - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+
       - name: Deploy project
         run: echo "Deploying..."

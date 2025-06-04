@@ -60,6 +60,9 @@ jobs:
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+      
+      - name: Install vite
+        run: npm install vite
 
       - name: Build the code
         run: npm run build

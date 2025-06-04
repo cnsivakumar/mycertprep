@@ -17,6 +17,7 @@ jobs:
       - name: Test Code
         run: npm run test
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -26,11 +27,12 @@ jobs:
       - name: Build the code
         run: npm run build
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v3
         with:
           name: desg-files
           path: desg
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Get code

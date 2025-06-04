@@ -10,6 +10,11 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: mycache-test-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm ci
       - name: Lint Code
@@ -22,6 +27,11 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: mycache-test-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm ci
       - name: Build the code
@@ -30,9 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: desg-files
-          path: |
-            components
-            package.json
+          path: package.json
   deploy:
     needs: build
     runs-on: ubuntu-latest

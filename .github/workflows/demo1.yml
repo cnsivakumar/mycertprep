@@ -21,7 +21,7 @@ jobs:
         id: run-tests
         run: npm run test
       - name: Print the test result
-        if: failure() && steps.run-tests.outcome == failure
+        if: failure() && steps.run-tests.outcome == 'failure'
         run: echo "Test failed in the previous step. Please validate"
   build:
     needs: test

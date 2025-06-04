@@ -32,11 +32,13 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
       - name: Cache dependencies
+        id: cache
         uses: actions/cache@v3
         with:
           path: ~/.npm
           key: mycache-test-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build the code
         run: npm run build
@@ -59,7 +61,14 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'npm'
-      - name: Install dependencies
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: mycache-test-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Deploy project
         run: echo "Deploying..."

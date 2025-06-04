@@ -43,8 +43,8 @@ jobs:
           path: package.json
   deploy:
     needs: build
-    runs-on: ubuntu-latest
     environment: Dev
+    runs-on: ubuntu-latest
     steps:
       - name: Get code
         uses: actions/checkout@v3

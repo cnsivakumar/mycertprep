@@ -51,7 +51,7 @@ jobs:
       - name: Use Node Version ${{ vars.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ var.NODE_VERSION }}
+          node-version: ${{ vars.NODE_VERSION }}
           cache: 'npm'
       - name: Install dependencies
         run: npm ci

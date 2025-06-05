@@ -3,6 +3,12 @@ on:
   push:
     branches: master
 jobs:
+  coderepo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the code repository
+        run: |
+          echo "Current Code repository is $GITHUB_REPOSITORY"
   test:
     runs-on: ubuntu-latest
     steps:

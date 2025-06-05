@@ -1,8 +1,15 @@
 name: common workflow
-on: workflow_call
+on: 
+  workflow_call:
+    inputs:
+      mystring:
+        description: This is my string
+        type: string
+        required: true
+        default: India
 jobs:
   display:
     runs-on: ubuntu-latest
     steps:
       - name: Output
-        run: echo "Deployment completed"
+        run: echo "Deployment completed in ${{inputs.mystring}}"

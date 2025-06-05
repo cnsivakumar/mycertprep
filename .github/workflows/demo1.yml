@@ -90,20 +90,5 @@ jobs:
           path: package.json
   deploy:
     needs: build
-    environment: QA
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-
-      - name: Print the Environment Variable
-        run: echo "Node version is ${{ vars.NODE_VERSION }}"
-
-      - name: Use Node Version ${{ vars.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ vars.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Deploy project
-        uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/reusable.yml
+        

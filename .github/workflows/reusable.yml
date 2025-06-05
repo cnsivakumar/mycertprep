@@ -1,6 +1,5 @@
 name: common workflow
-on:
-  worflow_call
+on: worflow_call
 jobs:
   display:
     runs-on: ubuntu-latest

@@ -1,30 +1,8 @@
-name: my_color_workflow
-on:
-  workflow_dispatch:
-env:
-  favorite_color: orange
+name: CI
+on: push
 jobs:
-  my_color_1:
-    runs-on: ubuntu-latest
-    env:
-      favorite_color: blue
-    steps:
-      - name: Set the color
-        id: step_one
-        env:
-          favorite_color: green
-        run: |
-          echo "my_color=$favorite_color" >> "$GITHUB_ENV"
-      - name: echo the color
-        id: step_two
-        run: |
-          echo "My color is ${{ env.my_color }}"
-          echo "My favorite color is ${{ env.favorite_color }}"
-  my_color_2:
+  prod-check:
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
-      - name: echo the color
-        id: step_one
-        run: |
-          echo "My color is ${{ env.my_color }}"
-          echo "My favorite color is ${{ env.favorite_color }}"
+      - run: echo "the main branch triggered this workflow"

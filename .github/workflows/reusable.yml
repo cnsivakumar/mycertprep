@@ -7,9 +7,19 @@ on:
         type: string
         required: true
         default: India
+    outputs:
+      myoutput:
+        description: This is my output from reusable workflow
+        value: ${{ jobs.display.outputs.outcome }}
 jobs:
   display:
+    outputs:
+      outcome: ${{ steps.set-output.outputs.result }}
     runs-on: ubuntu-latest
     steps:
       - name: Output
         run: echo "Deployment completed in ${{inputs.mystring}}"
+      
+      - name: Set Output
+        id: set-output
+        run: echo "result=Successful" >> $GITHUB_OUTPUT

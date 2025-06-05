@@ -93,4 +93,10 @@ jobs:
     uses: ./.github/workflows/reusable.yml
     with:
       mystring: 'Mexico'
+  
+  print-result:
+    needs: deploy
+    steps:
+      - name: Printing the output result
+        run: echo ${{ needs.deploy.outputs.myoutput }}
         

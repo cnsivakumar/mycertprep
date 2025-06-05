@@ -106,4 +106,4 @@ jobs:
           cache: 'npm'
 
       - name: Deploy project
-        run: echo "Deploying..."
+        uses: ./.github/workflows/reusable.yml

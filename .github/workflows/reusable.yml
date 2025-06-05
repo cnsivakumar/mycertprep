@@ -1,0 +1,8 @@
+name: common workflow
+on:
+  worflow_call
+display:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Output
+      run: echo "Deployment completed"

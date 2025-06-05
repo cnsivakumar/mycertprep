@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo the color
-        id: step_onee
+        id: step_one
         run: |
           echo "My color is ${{ env.my_color }}"
           echo "My favorite color is ${{ env.favorite_color }}"

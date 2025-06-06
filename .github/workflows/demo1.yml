@@ -6,7 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container: 
-      image: node-16
+      image: node:16
     steps:
       - name: Checkout the code
         uses: actions/checkout@v3

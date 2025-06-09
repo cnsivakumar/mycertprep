@@ -4,6 +4,10 @@ on:
     branches: master
 env:
   env_string: DEV
+defaults:
+  run:
+    shell: bash
+    working-directory: scripts
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -41,8 +45,7 @@ jobs:
       
       - name: Print the test result
         if: failure() && steps.run-tests.outcome == 'failure'
-        run: echo "Test failed in the previous step. Please validate"
-      
+        run: echo "Test failed in the previous step. Please validate"     
   build:
     needs: test
     env:
@@ -82,9 +85,22 @@ jobs:
         with:
           name: desg-files
           path: package.json
-  deploy:
+
+  script-job:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Make Script Executable
+        run: chmod +x run.sh
+
+      - name: Run the Script
+        run: ./run.sh
+  
+  deploy:
+    needs: script-job
     uses: ./.github/workflows/reusable.yml
     with:
       mystring: 'Mexico'
-  

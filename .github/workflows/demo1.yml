@@ -2,7 +2,11 @@ name: Events Demo 1
 on: 
   push:
     branches: master
+env:
+  env_string: DEV
 jobs:
+  env:
+    env_string: QA
   test:
     runs-on: ubuntu-latest
     container: 
@@ -36,10 +40,14 @@ jobs:
       - name: Test Code
         id: run-tests
         run: npm run test
+      
+      - name: Print result
+        run: echo "${{env.env_string}}"
 
       - name: Print the test result
         if: failure() && steps.run-tests.outcome == 'failure'
         run: echo "Test failed in the previous step. Please validate"
+      
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -80,10 +88,3 @@ jobs:
     with:
       mystring: 'Mexico'
   
-  print-result:
-    needs: deploy
-    runs-on: self-hosted
-    steps:
-      - name: Printing the output result
-        run: echo ${{ needs.deploy.outputs.myoutput }}
-        
